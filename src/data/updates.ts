@@ -13,6 +13,16 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    version: "v2.2.8",
+    date: "October 27, 2026",
+    title: "Calmer, clearer public website colours",
+    kind: "improvement",
+    items: [
+      { kind: "improvement", text: "The public website now uses a calm deep-slate background with a single surgical teal accent, crisp thin borders instead of glows and blurred glass, and no more bright white bands between sections." },
+      { kind: "improvement", text: "Headings, buttons and form fields are easier to read, with clearer focus outlines for keyboard users. The eye clinic page now shares the same look as the rest of the site." },
+    ],
+  },
+  {
     version: "v2.2.7",
     date: "October 27, 2026",
     title: "Eye clinic page: feature grid, patient flow and cost estimator",

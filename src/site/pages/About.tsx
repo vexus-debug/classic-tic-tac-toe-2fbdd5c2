@@ -120,7 +120,7 @@ const About = () => {
                 transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
-                <div className="bg-primary bg-clip-text text-5xl font-extrabold text-transparent">
+                <div className="site-figure text-5xl font-semibold tabular-nums">
                   {stat.value}
                 </div>
                 <div className="mt-2 text-sm font-medium text-white/50">{stat.label}</div>

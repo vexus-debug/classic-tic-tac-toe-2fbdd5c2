@@ -444,62 +444,141 @@
   transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* ── Public marketing site theme (scoped) ──
-   The public site follows the eye-clinics page: deep ink, electric teal,
-   quiet borders, and translucent surfaces. Fonts remain owned by each page. */
-.site-theme {
-  --background: 197 43% 6%;
-  --foreground: 168 21% 94%;
-  --card: 186 51% 12%;
-  --card-foreground: 168 21% 94%;
-  --popover: 186 51% 12%;
-  --popover-foreground: 168 21% 94%;
-  --primary: 172 84% 39%;
-  --primary-foreground: 197 43% 6%;
-  --secondary: 186 51% 12%;
-  --secondary-foreground: 168 21% 94%;
-  --muted: 186 51% 12%;
-  --muted-foreground: 168 12% 70%;
-  --accent: 172 84% 39%;
-  --accent-foreground: 197 43% 6%;
-  --destructive: 0 84% 60%;
+/* ── Clinexus Clinical Design System — public marketing site (scoped) ──
+   Deep matte slate ground, one surgical pine-teal accent, hairline borders,
+   no glows, no glass blur, no white-out bands. Status hues are functional only. */
+.site-theme,
+.eye-theme {
+  /* Canvas & surfaces */
+  --site-ground: 200 32% 8%;
+  --site-surface-1: 200 26% 12%;
+  --site-surface-2: 200 24% 15%;
+  --site-surface-elevated: 200 22% 19%;
+  /* Hairlines */
+  --site-border-subtle: 200 16% 20%;
+  --site-border-interactive: 178 30% 32%;
+  /* Text */
+  --text-secondary: 200 12% 70%;
+  --text-muted: 200 10% 58%;
+  /* Accent: filled surfaces use --primary; text/icons on dark use --primary-text */
+  --primary-hover: 178 70% 24%;
+  --primary-text: 176 42% 62%;
+  /* Clinical status */
+  --status-success: 154 58% 40%;
+  --status-warning: 38 86% 48%;
+  --status-alert: 0 72% 52%;
+  --status-info: 212 65% 52%;
+  /* Shape & motion */
+  --radius-card: 0.5rem;
+  --elevation-card: 0 1px 3px hsl(0 0% 0% / 0.35);
+  --transition-snappy: 150ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* shadcn mapping */
+  --background: var(--site-ground);
+  --foreground: 200 15% 96%;
+  --card: var(--site-surface-2);
+  --card-foreground: 200 15% 96%;
+  --popover: var(--site-surface-elevated);
+  --popover-foreground: 200 15% 96%;
+  --primary: 178 65% 28%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: var(--site-surface-1);
+  --secondary-foreground: 200 15% 96%;
+  --muted: var(--site-surface-1);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--site-surface-elevated);
+  --accent-foreground: 200 15% 96%;
+  --destructive: var(--status-alert);
   --destructive-foreground: 0 0% 100%;
-  --border: 172 84% 39%;
-  --input: 172 84% 39%;
-  --ring: 172 84% 39%;
-  --radius: 1.5rem;
-  --medical-blue: 172 84% 39%;
-  --medical-blue-light: 168 21% 94%;
-  --medical-blue-dark: 197 43% 6%;
-  --medical-navy: 197 43% 6%;
-  --medical-teal: 172 84% 39%;
+  --border: var(--site-border-subtle);
+  --input: var(--site-border-subtle);
+  --ring: var(--primary-text);
+  --radius: 0.5rem;
+  --surface-light: var(--site-surface-1);
+  --surface-light-foreground: 200 15% 96%;
+  --medical-blue: 178 65% 28%;
+  --medical-blue-light: 200 15% 96%;
+  --medical-blue-dark: var(--site-ground);
+  --medical-navy: var(--site-ground);
+  --medical-teal: 178 65% 28%;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
 }
 
-.site-theme [class*="bg-card"] {
-  border-color: hsl(var(--primary) / 0.2);
-  background-color: hsl(var(--card) / 0.72);
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+/* Accent text/icons on dark ground need a lighter tint to pass contrast. */
+:where(.site-theme, .eye-theme) :where(.text-primary) {
+  color: hsl(var(--primary-text));
+}
+:where(.site-theme, .eye-theme) :where(.bg-primary) .text-primary,
+:where(.site-theme, .eye-theme) .bg-primary {
+  color: hsl(var(--primary-foreground));
+}
+:where(.site-theme, .eye-theme) .bg-primary {
+  transition: background-color var(--transition-snappy), border-color var(--transition-snappy);
+}
+:where(.site-theme, .eye-theme) .bg-primary:is(a, button):hover {
+  background-color: hsl(var(--primary-hover));
 }
 
-.site-theme [class*="border-border"] {
-  border-color: hsl(var(--primary) / 0.2);
+/* Matte surfaces, hairline borders — no blur, no glow. */
+:where(.site-theme, .eye-theme) [class*="bg-card"],
+:where(.site-theme, .eye-theme) .site-glass,
+:where(.site-theme, .eye-theme) .eye-panel {
+  border-color: hsl(var(--site-border-subtle));
+  background-color: hsl(var(--site-surface-2));
+  box-shadow: var(--elevation-card);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+:where(.site-theme, .eye-theme) .site-glass,
+:where(.site-theme, .eye-theme) .eye-panel {
+  border: 1px solid hsl(var(--site-border-subtle));
+}
+:where(.site-theme, .eye-theme) :is(a, button)[class*="bg-card"]:hover,
+:where(.site-theme, .eye-theme) a.site-glass:hover {
+  border-color: hsl(var(--site-border-interactive));
+}
+:where(.site-theme, .eye-theme) [class*="border-border"] {
+  border-color: hsl(var(--site-border-subtle));
+}
+:where(.site-theme, .eye-theme) [class*="bg-muted"] {
+  background-color: hsl(var(--site-surface-1));
+}
+:where(.site-theme, .eye-theme) :where([class*="backdrop-blur"]) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* Gradient-clipped text renders as solid heading colour. */
+:where(.site-theme, .eye-theme) .bg-clip-text {
+  background-image: none !important;
+  -webkit-text-fill-color: currentColor;
+  color: hsl(var(--foreground));
+}
+/* Decorative blur orbs are retired. */
+:where(.site-theme, .eye-theme) :where(.blur-3xl, .blur-2xl)[aria-hidden="true"],
+:where(.site-theme, .eye-theme) :where(.pointer-events-none.blur-3xl, .pointer-events-none.blur-2xl) {
+  display: none;
+}
+/* Inputs: dark matte, teal outline on focus. */
+:where(.site-theme, .eye-theme) :is(input, textarea, select) {
+  background-color: hsl(var(--site-surface-1));
+  border-color: hsl(var(--site-border-subtle));
+}
+:where(.site-theme, .eye-theme) :is(input, textarea, select):focus-visible {
+  outline: 2px solid hsl(var(--primary-text));
+  outline-offset: 1px;
+}
+:where(.site-theme, .eye-theme) :is(a, button):focus-visible {
+  outline: 2px solid hsl(var(--primary-text));
+  outline-offset: 2px;
 }
 
-.site-theme [class*="bg-muted"] {
-  background-color: hsl(var(--muted) / 0.58);
-}
-
-.site-theme .site-glass {
-  border: 1px solid hsl(var(--primary) / 0.2);
-  background-color: hsl(var(--card) / 0.64);
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
-}
+/* Status pills (functional colour only). */
+.site-theme .status-success { color: hsl(var(--status-success)); background: hsl(var(--status-success) / 0.12); }
+.site-theme .status-warning { color: hsl(var(--status-warning)); background: hsl(var(--status-warning) / 0.12); }
+.site-theme .status-alert   { color: hsl(var(--status-alert));   background: hsl(var(--status-alert) / 0.12); }
+.site-theme .status-info    { color: hsl(var(--status-info));    background: hsl(var(--status-info) / 0.12); }
 
 @media (prefers-reduced-motion: reduce) {
   .site-theme *,
@@ -512,163 +591,93 @@
   }
 }
 
-/* ── Eye clinics sales page theme (scoped) ── */
-.eye-theme {
-  --background: 197 43% 6%;
-  --foreground: 168 21% 94%;
-  --card: 186 51% 12%;
-  --card-foreground: 168 21% 94%;
-  --popover: 186 51% 12%;
-  --popover-foreground: 168 21% 94%;
-  --primary: 172 84% 39%;
-  --primary-foreground: 197 43% 6%;
-  --secondary: 186 51% 12%;
-  --secondary-foreground: 168 21% 94%;
-  --muted: 186 51% 12%;
-  --muted-foreground: 168 12% 70%;
-  --accent: 172 84% 39%;
-  --accent-foreground: 197 43% 6%;
-  --surface-light: 168 21% 94%;
-  --surface-light-foreground: 197 43% 6%;
-  --border: 172 84% 39%;
-  --input: 172 84% 39%;
-  --ring: 172 84% 39%;
-  --radius: 1.5rem;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: "Manrope", system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
+.eye-theme { font-family: "DM Sans", system-ui, sans-serif; }
+.eye-theme h1, .eye-theme h2, .eye-theme h3, .eye-theme .font-display {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
 }
-
-.eye-theme h1,
-.eye-theme h2,
-.eye-theme h3,
-.eye-theme .font-display {
-  font-family: "Sora", system-ui, sans-serif;
-}
-
-.eye-theme .eye-panel {
-  border: 1px solid hsl(var(--primary) / 0.2);
-  background-color: hsl(var(--card));
-}
-
 .eye-theme .eye-panel-light {
-  background-color: hsl(var(--surface-light));
-  color: hsl(var(--surface-light-foreground));
+  background-color: hsl(var(--site-surface-1));
+  color: hsl(var(--foreground));
 }
-
 .eye-theme .eye-panel-accent {
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
 }
-
-.eye-theme .eye-panel-accent .text-primary,
-.eye-theme .eye-panel-accent .text-card-foreground {
+.eye-theme .eye-panel-accent :is(.text-primary, .text-card-foreground) {
   color: hsl(var(--primary-foreground));
 }
-
 .eye-theme .eye-panel-accent .text-muted-foreground {
   color: hsl(var(--primary-foreground) / 0.85);
 }
 
-/* ── Public site section bands ──
-   Alternating surfaces so a page is never one flat colour:
-   deep ink, tinted ink, and bright near-white bands. */
-.site-theme .site-section-tint {
-  background-image:
-    radial-gradient(90% 60% at 12% 0%, hsl(var(--primary) / 0.14) 0%, transparent 62%),
-    linear-gradient(180deg, hsl(var(--background)) 0%, hsl(186 51% 10%) 50%, hsl(var(--background)) 100%);
+/* ── Section bands: one continuous slate scale, no white-out bands ── */
+.site-theme .site-section-tint,
+.site-theme .site-surface-tint {
+  background-color: hsl(var(--site-surface-1));
+  background-image: none;
 }
-
 .site-theme .site-section-light {
-  --background: 0 0% 100%;
-  --foreground: 197 43% 8%;
-  --card: 0 0% 100%;
-  --card-foreground: 197 43% 8%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 197 43% 8%;
-  --primary: 172 74% 28%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 172 30% 94%;
-  --secondary-foreground: 197 43% 8%;
-  --muted: 180 20% 96%;
-  --muted-foreground: 197 12% 38%;
-  --accent: 172 60% 92%;
-  --accent-foreground: 197 43% 8%;
-  --border: 180 18% 86%;
-  --input: 180 18% 86%;
+  --background: var(--site-surface-1);
+  background-color: hsl(var(--site-surface-1));
+  background-image: none;
   color: hsl(var(--foreground));
-  background-image:
-    radial-gradient(80% 60% at 85% 0%, hsl(172 74% 28% / 0.07) 0%, transparent 60%),
-    linear-gradient(180deg, hsl(180 25% 98%) 0%, hsl(0 0% 100%) 45%, hsl(180 25% 97%) 100%);
 }
-
-.site-theme .site-section-light [class*="bg-card"],
-.site-theme .site-section-light .site-glass {
-  border-color: hsl(var(--primary) / 0.14);
-  background-color: hsl(0 0% 100% / 0.86);
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-}
-
-.site-theme .site-section-light [class*="bg-muted"] {
-  background-color: hsl(var(--muted) / 0.8);
-}
-
-/* Soft edge between bands */
 .site-theme .site-section-light,
-.site-theme .site-section-tint {
-  border-top: 1px solid hsl(var(--primary) / 0.14);
-  border-bottom: 1px solid hsl(var(--primary) / 0.14);
+.site-theme .site-section-tint,
+.site-theme .site-surface-tint {
+  border-top: 1px solid hsl(var(--site-border-subtle));
+  border-bottom: 1px solid hsl(var(--site-border-subtle));
 }
 
-/* ── Public site typography & surfaces ──
-   Clean sans-serif headings for a clinical, trustworthy SaaS feel,
-   tight sans body and hairline borders. Scoped to the public site. */
+/* ── Typography ── */
 .site-theme h1,
 .site-theme h2,
 .site-theme h3 {
-  font-family: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
-
-.site-theme h1 {
-  line-height: 1.04;
-}
-
+.site-theme h1 { line-height: 1.06; }
 .site-theme p,
 .site-theme li {
   font-family: "DM Sans", system-ui, sans-serif;
   letter-spacing: -0.005em;
+  text-wrap: pretty;
 }
-
+.site-theme .site-prose p,
+.site-theme .site-prose li {
+  max-width: 70ch;
+  font-size: 1rem;
+  line-height: 1.6;
+}
 .site-theme .site-eyebrow {
   font-family: "DM Sans", system-ui, sans-serif;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: hsl(var(--text-muted));
 }
-
+.site-theme .tabular-nums,
+.site-theme .site-figure {
+  font-variant-numeric: tabular-nums;
+  color: hsl(var(--foreground));
+}
 .site-theme .site-hairline {
-  border: 1px solid hsl(var(--border));
+  border: 1px solid hsl(var(--site-border-subtle));
   box-shadow: none;
 }
-
 .site-theme .site-hairline-invert {
-  border: 1px solid hsl(0 0% 100% / 0.12);
+  border: 1px solid hsl(var(--site-border-subtle));
   box-shadow: none;
 }
-
-/* Public surfaces stay crisp and border-led rather than glow-led. */
-.site-theme :where(.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl) {
-  box-shadow: none;
+/* Surfaces are border-led; drop large/coloured shadows. */
+.site-theme :where(.shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, [class*="shadow-primary"]) {
+  box-shadow: var(--elevation-card);
 }
-
 .site-theme .site-rule {
-  border-top: 1px solid hsl(var(--border));
+  border-top: 1px solid hsl(var(--site-border-subtle));
 }
 
 /* ── Dashboard app theme ──

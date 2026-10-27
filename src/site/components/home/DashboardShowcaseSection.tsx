@@ -84,7 +84,7 @@ const DashboardShowcaseSection = () => {
           className="mt-10 text-center"
         >
           <Link to="/industries">
-            <Button size="lg" className="gap-2 rounded-md bg-primary text-white shadow-lg shadow-primary/30 hover:opacity-90">
+            <Button size="lg" className="gap-2 rounded-md bg-primary text-primary-foreground">
               Take the Full Tour <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
