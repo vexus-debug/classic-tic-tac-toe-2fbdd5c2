@@ -83,10 +83,6 @@ const SpecialtyStage = () => {
   return (
     <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] lg:mt-16 lg:grid lg:grid-cols-12 lg:items-center lg:gap-8 lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent">
       <div className="relative h-64 w-full sm:h-80 lg:order-2 lg:col-span-7 lg:h-auto lg:aspect-[5/4]">
-        <div
-          aria-hidden
-          className="absolute inset-[12%] rounded-full bg-[hsl(var(--medical-teal))]/10 blur-3xl"
-        />
         <div ref={mountRef} className="absolute inset-0" aria-hidden />
         <motion.div
           initial={false}

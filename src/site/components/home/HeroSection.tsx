@@ -19,8 +19,6 @@ const HeroSection = () => {
   });
 
   // Parallax layers: background orbs drift slow, dashboard floats faster
-  const orbSlowY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 120]);
-  const orbFastY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -90]);
   const dashboardY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -60]);
   const glassCardY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -130]);
 
